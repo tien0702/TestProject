@@ -1,7 +1,3 @@
-using SimpleJSON;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using TT;
 using UnityEngine;
@@ -15,7 +11,7 @@ public class ConversationController : SingletonBehaviour<ConversationController>
     public ObserverEvents<ConversationEventType, ConversationNode> Events => _events;
     #endregion
 
-    public enum ConversationState { Playing, Pause, None }
+    public enum ConversationState { None, Playing, Pause }
 
     [SerializeField] TextMeshProUGUI _content;
     [SerializeField] TextMeshProUGUI _entityName;

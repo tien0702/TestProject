@@ -10,21 +10,21 @@ public class JoystickConditionInfo
 
 public class JoystickCondition : BaseCondition, IInfo, IOnCheck
 {
-    [SerializeField] JoystickConditionInfo info;
+    [SerializeField] JoystickConditionInfo _info;
     JoystickController _joystick;
 
     public void SetInfo(object data)
     {
         if (data is JoystickConditionInfo)
         {
-            info = (JoystickConditionInfo)data;
+            _info = (JoystickConditionInfo)data;
         }
     }
 
     public void OnCheck()
     {
-        _joystick = JoystickController.GetJoystick(info.JoystickID);
-        if (!info.IsControl)
+        _joystick = JoystickController.GetJoystick(_info.JoystickID);
+        if (!_info.IsControl)
         {
             this.SetSuitableCondition(_joystick.Direction.Equals(Vector2.zero));
         }
