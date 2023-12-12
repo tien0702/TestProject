@@ -1,0 +1,13 @@
+{
+    "data" : [
+        {
+            "AssemblyName" : "Assembly-CSharp",
+            "ComponentType": "TestComponent",
+            "TypeInfo": "TestComponentInfo",
+            "data":{
+                "Name": "Test Player",
+                "Level": 1
+            }
+        }
+    ]
+}

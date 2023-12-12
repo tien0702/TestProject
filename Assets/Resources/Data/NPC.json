@@ -1,0 +1,40 @@
+{
+    "data": {
+        "EntityName": "",
+        "Content": "",
+        "Responses": [
+            {
+                "EntityName": "NPC",
+                "Content": "Hello",
+                "Responses": []
+            },
+            {
+                "EntityName": "Player",
+                "Content": "Hello",
+                "Responses": []
+            },
+            {
+                "EntityName": "NPC",
+                "Content": "Do you want to assign this quest?",
+                "Responses": [
+                    {
+                        "EntityName": "Player",
+                        "Content": "Yes",
+                        "Responses": [
+                            {
+                                "EntityName": "NPC",
+                                "Content": "You has assigned quest",
+                                "Responses": []
+                            }
+                        ]
+                    },
+                    {
+                        "EntityName": "Player",
+                        "Content": "No",
+                        "Responses": []
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,204 @@
+{
+    "data": [
+        {
+            "AssemblyName": "Assembly-CSharp",
+            "NodeType": "TT.StateController",
+            "NodeTypeInfo": "TT.StateInfo",
+            "data": {
+                "StateName": "Idle",
+                "AnimName": "Idle",
+                "NextStates": [
+                    "Run",
+                    "Attack",
+                    "Jump",
+                    "Fall"
+                ],
+                "data": [
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "TT.PlayAnimation",
+                        "NodeTypeInfo": null,
+                        "data": null
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "JoystickCondition",
+                        "NodeTypeInfo": "JoystickConditionInfo",
+                        "data": {
+                            "JoystickID": "Control",
+                            "IsControl": false
+                        }
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "OnGroundCondition",
+                        "NodeTypeInfo": "OnGroundConditionInfo",
+                        "data": {
+                            "LayerName": "Ground"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "AssemblyName": "Assembly-CSharp",
+            "NodeType": "TT.StateController",
+            "NodeTypeInfo": "TT.StateInfo",
+            "data": {
+                "StateName": "Run",
+                "AnimName": "Run",
+                "NextStates": [
+                    "Idle",
+                    "Jump",
+                    "Fall"
+                ],
+                "data": [
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "TT.PlayAnimation",
+                        "NodeTypeInfo": null,
+                        "data": null
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "JoystickCondition",
+                        "NodeTypeInfo": "JoystickConditionInfo",
+                        "data": {
+                            "JoystickID": "Control",
+                            "IsControl": true
+                        }
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "RunHandle",
+                        "NodeTypeInfo": "RunHandleInfo",
+                        "data": {
+                            "JoystickID": "Control"
+                        }
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "OnGroundCondition",
+                        "NodeTypeInfo": "OnGroundConditionInfo",
+                        "data": {
+                            "LayerName": "Ground"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "AssemblyName": "Assembly-CSharp",
+            "NodeType": "TT.StateController",
+            "NodeTypeInfo": "TT.StateInfo",
+            "data": {
+                "StateName": "Jump",
+                "AnimName": "Jump",
+                "NextStates": [
+                    "Idle",
+                    "Run",
+                    "Fall"
+                ],
+                "data": [
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "TT.PlayAnimation",
+                        "NodeTypeInfo": null,
+                        "data": null
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "JumpCondition",
+                        "NodeTypeInfo": "JumpConditionInfo",
+                        "data": {
+                            "KeyName": "Space"
+                        }
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "JumpHandle",
+                        "NodeTypeInfo": "JumpHandleInfo",
+                        "data": {
+                            "JumpForce": 4,
+                            "JoystickID": "Control"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "AssemblyName": "Assembly-CSharp",
+            "NodeType": "TT.StateController",
+            "NodeTypeInfo": "TT.StateInfo",
+            "data": {
+                "StateName": "Fall",
+                "AnimName": "Fall",
+                "NextStates": [
+                    "Idle",
+                    "Run"
+                ],
+                "data": [
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "TT.PlayAnimation",
+                        "NodeTypeInfo": null,
+                        "data": null
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "FallCondition",
+                        "NodeTypeInfo": "FallHandleInfo",
+                        "data": {
+                            "Val": 300
+                        }
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "FallHandle",
+                        "NodeTypeInfo": "FallHandleInfo",
+                        "data": {
+                            "MaxFallSpeed": -100
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "AssemblyName": "Assembly-CSharp",
+            "NodeType": "TT.StateController",
+            "NodeTypeInfo": "TT.StateInfo",
+            "data": {
+                "StateName": "Attack1",
+                "AnimName": "Attack1",
+                "NextStates": [
+                    "Attack2",
+                    "Idle"
+                ],
+                "data": [
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "TT.PlayAnimation",
+                        "NodeTypeInfo": null,
+                        "data": null
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "FallCondition",
+                        "NodeTypeInfo": "FallHandleInfo",
+                        "data": {
+                            "Val": 300
+                        }
+                    },
+                    {
+                        "AssemblyName": "Assembly-CSharp",
+                        "NodeType": "FallHandle",
+                        "NodeTypeInfo": "FallHandleInfo",
+                        "data": {
+                            "MaxFallSpeed": -100
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
