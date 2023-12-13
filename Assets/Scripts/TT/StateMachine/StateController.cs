@@ -28,6 +28,24 @@ namespace TT
         void OnCheck();
     }
 
+    public class StateInfoHash
+    {
+        public int State;
+        public int Anim;
+        public int[] NextStates;
+
+        public StateInfoHash(StateInfo stateInfo)
+        {
+            State = Animator.StringToHash(stateInfo.StateName);
+            Anim = Animator.StringToHash(stateInfo.AnimName);
+            NextStates = new int[stateInfo.NextStates.Length];
+            for (int i = 0; i < NextStates.Length; ++i)
+            {
+                NextStates[i] = Animator.StringToHash(stateInfo.NextStates[i]);
+            }
+        }
+    }
+
     [System.Serializable]
     public class StateInfo
     {
@@ -46,24 +64,6 @@ namespace TT
                     _stateHash = new StateInfoHash(this);
                 }
                 return _stateHash;
-            }
-        }
-    }
-
-    public class StateInfoHash
-    {
-        public int StateNameHash;
-        public int AnimNameHash;
-        public int[] NextStatesHash;
-
-        public StateInfoHash(StateInfo stateInfo)
-        {
-            StateNameHash = Animator.StringToHash(stateInfo.StateName);
-            AnimNameHash = Animator.StringToHash(stateInfo.AnimName);
-            NextStatesHash = new int[stateInfo.NextStates.Length];
-            for (int i = 0; i < NextStatesHash.Length; ++i)
-            {
-                NextStatesHash[i] = Animator.StringToHash(stateInfo.NextStates[i]);
             }
         }
     }
@@ -141,7 +141,7 @@ namespace TT
             ActionHandle();
         }
 
-        public virtual string OnUpdate(float deltaTime)
+        public virtual int OnUpdate(float deltaTime)
         {
             // Updates
             foreach (IOnUpdate update in _updates)
@@ -151,19 +151,19 @@ namespace TT
 
             _events.Notify(StateEventType.OnUpdate, this);
 
-            if (IsHandling()) return _info.StateName;
+            if (IsHandling()) return _info.StateHash.State;
 
             // Check next states
             for (int i = 0; i < _info.NextStates.Length; i++)
             {
-                StateController nextState = _stateMachine.GetStateByName(_info.NextStates[i]);
+                StateController nextState = _stateMachine.GetState(_info.StateHash.NextStates[i]);
                 if (nextState != null && nextState.IsSuitable())
                 {
-                    return _info.NextStates[i];
+                    return _info.StateHash.NextStates[i];
                 }
             }
 
-            return _info.StateName;
+            return _info.StateHash.State;
         }
 
         public virtual void OnExit()

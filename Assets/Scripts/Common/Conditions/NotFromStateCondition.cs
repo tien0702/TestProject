@@ -40,7 +40,7 @@ public class NotFromStateCondition : BaseConditionBehaviour, IInfo
     {
         foreach (string stateName in info.StateNames)
         {
-            if (stateName.Equals(machine.CurrentStateName))
+            if (stateName.Equals(machine.CurrentState))
             {
                 this.SetSuitableCondition(false);
                 return;

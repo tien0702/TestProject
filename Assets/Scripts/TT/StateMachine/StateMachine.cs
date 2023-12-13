@@ -13,15 +13,15 @@ namespace TT
         public ObserverEvents<StateMachineEventType, StateController> Events => _events;
         #endregion
 
-        Dictionary<string, StateController> _states = new Dictionary<string, StateController>();
+        Dictionary<int, StateController> _states = new Dictionary<int, StateController>();
 
-        [SerializeField] string _currentState;
-        public string CurrentStateName => _currentState;
+        [SerializeField] int _currentState = -1;
+        public int CurrentState => _currentState;
         public StateController[] States => _states.Values.ToArray();
 
         protected virtual void Start()
         {
-            if (_currentState != null && !_currentState.Equals(string.Empty))
+            if (_currentState == -1)
             {
                 _states[_currentState].OnEnter();
             }
@@ -29,10 +29,10 @@ namespace TT
 
         protected virtual void Update()
         {
-            string stateName = _states[_currentState].OnUpdate(Time.deltaTime);
-            if (stateName.Equals(_currentState)) return;
+            int state = _states[_currentState].OnUpdate(Time.deltaTime);
+            if (state.Equals(_currentState)) return;
             _states[_currentState].OnExit();
-            _currentState = stateName;
+            _currentState = state;
             _events.Notify(StateMachineEventType.OnChangeState, _states[_currentState]);
             _states[_currentState].OnEnter();
         }
@@ -71,29 +71,28 @@ namespace TT
             if (component is StateController)
             {
                 StateController state = (StateController)component;
-                if (_currentState == null || _currentState.Equals(string.Empty))
+                if (_currentState == -1)
                 {
-                    _currentState = state.Info.StateName;
+                    _currentState = state.Info.StateHash.State;
                 }
-                if (!_states.ContainsKey(state.Info.StateName))
+                if (!_states.ContainsKey(state.Info.StateHash.State))
                 {
-                    _states.Add(state.Info.StateName, state);
+                    _states.Add(state.Info.StateHash.State, state);
                 }
                 else
                 {
-                    _states[state.Info.StateName] = state;
+                    _states[state.Info.StateHash.State] = state;
                 }
             }
         }
 
-        public StateController GetStateByName(string name)
+        public StateController GetState(int  stateHash)
         {
-            if (!_states.ContainsKey(name))
+            if(!_states.ContainsKey(stateHash))
             {
                 return null;
             }
-
-            return _states[name];
+            return _states[stateHash];
         }
     }
 }
