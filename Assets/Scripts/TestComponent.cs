@@ -33,37 +33,9 @@ public class ConditionA : Component
 
 public class TestComponent : MonoBehaviour
 {
-    private void Awake()
+    public ParticleSystem _particleSystem;
+    public void Play()
     {
-        Assembly assembly = Assembly.Load("Assembly-CSharp");
-        NodeType componentType = new NodeType();
-        componentType.Type = assembly.GetType("ConditionA");
-
-
-        object c = (object)Activator.CreateInstance(componentType.Type);
-
-        if (c is Component)
-        {
-            Debug.Log("is component");
-        }
-
-        /*if(c is IOnUpdate)
-        {
-            Debug.Log("State update");
-            ((IOnUpdate)c).OnUpdate(0);
-        }*/
-
-        if(c is ICondition)
-        {
-            Debug.Log("condition");
-        }
-
-        /*B b = (B)Activator.CreateInstance(type);
-        if(b is IAction)
-        {
-            Debug.Log("i action");
-            var action = (IAction)b;
-            action.PerformAction();
-        }*/
+        _particleSystem.Play();
     }
 }

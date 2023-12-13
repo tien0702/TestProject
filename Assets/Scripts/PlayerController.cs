@@ -13,16 +13,6 @@ public class PlayerController : EntityController
     protected override void Awake()
     {
         base.Awake();
-        /*var data = Resources.Load<TextAsset>("Data/Player").text;
-
-        JSONNode jsonData = JSONObject.Parse(data);
-
-        components = ComponentUtils.GetComponentTypes(jsonData["data"]);
-
-        foreach (var component in components)
-        {
-            ComponentHelper.AddComponent(this.gameObject, component);
-        }*/
 
         StatController statController = GetComponent<StatController>();
         statController.SetStatInfo(new StatInfo() { StatID = "SPD", BaseValue = 600, MaxFinalValue = 800 });

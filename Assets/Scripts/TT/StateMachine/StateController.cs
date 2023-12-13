@@ -34,6 +34,38 @@ namespace TT
         public string StateName;
         public string AnimName;
         public string[] NextStates;
+
+
+        private StateInfoHash _stateHash;
+        public StateInfoHash StateHash
+        {
+            get
+            {
+                if(_stateHash == null)
+                {
+                    _stateHash = new StateInfoHash(this);
+                }
+                return _stateHash;
+            }
+        }
+    }
+
+    public class StateInfoHash
+    {
+        public int StateNameHash;
+        public int AnimNameHash;
+        public int[] NextStatesHash;
+
+        public StateInfoHash(StateInfo stateInfo)
+        {
+            StateNameHash = Animator.StringToHash(stateInfo.StateName);
+            AnimNameHash = Animator.StringToHash(stateInfo.AnimName);
+            NextStatesHash = new int[stateInfo.NextStates.Length];
+            for (int i = 0; i < NextStatesHash.Length; ++i)
+            {
+                NextStatesHash[i] = Animator.StringToHash(stateInfo.NextStates[i]);
+            }
+        }
     }
 
     public class StateController : ActionNode, IInfo
