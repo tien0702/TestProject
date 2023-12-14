@@ -40,6 +40,7 @@ namespace TT
             LinkedList<MonoBehaviour> objects = new LinkedList<MonoBehaviour>();
 
             Transform pool = new GameObject("[Pool]: " + poolName).transform;
+            pool.position = Vector3.zero;
             for (int i = 0; i < size; ++i)
             {
                 T newObj = GameObject.Instantiate(prefab, pool);
