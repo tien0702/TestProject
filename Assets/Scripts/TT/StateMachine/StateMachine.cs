@@ -94,5 +94,17 @@ namespace TT
             }
             return _states[stateHash];
         }
+
+        public StateController GetStateByName(string stateName)
+        {
+            foreach(var state in _states)
+            {
+                if(state.Value.Info.StateName.Equals(stateName))
+                {
+                    return state.Value;
+                }
+            }
+            return null;
+        }
     }
 }

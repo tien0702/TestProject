@@ -8,7 +8,7 @@ public class FallHandleInfo
 {
     public float MaxFallSpeed;
 }
-public class FallHandle : BaseHandle, IInfo, IOwn, IOnUpdate
+public class FallHandle : BaseHandle, IInfo, IOwn
 {
     Rigidbody2D _rb2d;
     [SerializeField] FallHandleInfo _info;
@@ -19,7 +19,7 @@ public class FallHandle : BaseHandle, IInfo, IOwn, IOnUpdate
         EndHandle();
     }
 
-    public void OnUpdate(float deltaTime)
+    public void OnUpdate(StateController state)
     {
         if (_rb2d.velocity.y < _info.MaxFallSpeed)
         {
@@ -39,5 +39,6 @@ public class FallHandle : BaseHandle, IInfo, IOwn, IOnUpdate
     {
         MonoBehaviour behaviour = own as MonoBehaviour;
         _rb2d = behaviour.GetComponentInChildren<Rigidbody2D>();
+        (own as StateController).Events.RegisterEvent(StateController.StateEventType.OnUpdate, OnUpdate);
     }
 }

@@ -10,6 +10,10 @@ public class PlayerController : EntityController
 
     [SerializeField] TextMesh stateInfoName;
 
+    public TestComponent prefab;
+
+    Transform pool;
+
     protected override void Awake()
     {
         base.Awake();
@@ -26,7 +30,7 @@ public class PlayerController : EntityController
     {
         var states = stateMachine.States;
 
-        foreach( var state in states )
+        foreach (var state in states)
         {
             state.Events.RegisterEvent(StateController.StateEventType.OnEnter, (StateController newState) =>
             {
@@ -35,7 +39,25 @@ public class PlayerController : EntityController
         }
 
         InteractableController.Instance.GetComponent<FollowTargetController>().Target = this.transform;
-        
+
+        pool = ObjectPool.Instance.CreatePool<TestComponent>("Test Pool", prefab, 10);
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            var obj = ObjectPool.Instance.GetObject<TestComponent>("Test Pool");
+        }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            ObjectPool.Instance.DestroyPool("Test Pool");
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ObjectPool.Instance.AddMoreObject("Test Pool", 3);
+        }
     }
 
     protected override void OnLevelUp(int level)

@@ -13,14 +13,7 @@
                     "Jump",
                     "Fall"
                 ],
-                "data": [
-                    {
-                        "AssemblyName": "Assembly-CSharp",
-                        "NodeType": "TT.PlayAnimation",
-                        "NodeTypeInfo": null,
-                        "data": null
-                    },
-                    {
+                "data": [{
                         "AssemblyName": "Assembly-CSharp",
                         "NodeType": "JoystickCondition",
                         "NodeTypeInfo": "JoystickConditionInfo",
@@ -53,12 +46,6 @@
                     "Fall"
                 ],
                 "data": [
-                    {
-                        "AssemblyName": "Assembly-CSharp",
-                        "NodeType": "TT.PlayAnimation",
-                        "NodeTypeInfo": null,
-                        "data": null
-                    },
                     {
                         "AssemblyName": "Assembly-CSharp",
                         "NodeType": "JoystickCondition",
@@ -102,12 +89,6 @@
                 "data": [
                     {
                         "AssemblyName": "Assembly-CSharp",
-                        "NodeType": "TT.PlayAnimation",
-                        "NodeTypeInfo": null,
-                        "data": null
-                    },
-                    {
-                        "AssemblyName": "Assembly-CSharp",
                         "NodeType": "JumpCondition",
                         "NodeTypeInfo": "JumpConditionInfo",
                         "data": {
@@ -140,12 +121,6 @@
                 "data": [
                     {
                         "AssemblyName": "Assembly-CSharp",
-                        "NodeType": "TT.PlayAnimation",
-                        "NodeTypeInfo": null,
-                        "data": null
-                    },
-                    {
-                        "AssemblyName": "Assembly-CSharp",
                         "NodeType": "FallCondition",
                         "NodeTypeInfo": "FallHandleInfo",
                         "data": {
@@ -175,12 +150,6 @@
                     "Idle"
                 ],
                 "data": [
-                    {
-                        "AssemblyName": "Assembly-CSharp",
-                        "NodeType": "TT.PlayAnimation",
-                        "NodeTypeInfo": null,
-                        "data": null
-                    },
                     {
                         "AssemblyName": "Assembly-CSharp",
                         "NodeType": "FallCondition",

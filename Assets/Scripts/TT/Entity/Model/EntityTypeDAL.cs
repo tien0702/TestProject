@@ -1,5 +1,4 @@
 using UnityEngine;
-using TT.Entity;
 using System.Linq;
 
 namespace TT
@@ -11,7 +10,7 @@ namespace TT
             this.LoadData<EntityDAL>(type);
         }
 
-        public EntityDAL[] GetEntityVOs()
+        public EntityDAL[] GetEntityDALs()
         {
             return System.Array.ConvertAll(dic.Values.ToArray(), entityVO => (EntityDAL)entityVO);
         }

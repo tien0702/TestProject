@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
-namespace TT.Entity
+namespace TT
 {
     public class EntityDAL : SingleDAL
     {

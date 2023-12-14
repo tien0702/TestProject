@@ -7,7 +7,7 @@ public class RunHandleInfo
     public string JoystickID;
 }
 
-public class RunHandle : IInfo, IOwn, IOnUpdate
+public class RunHandle : IInfo, IOwn
 {
     [SerializeField] RunHandleInfo _info;
     public RunHandleInfo Info => _info;
@@ -17,13 +17,13 @@ public class RunHandle : IInfo, IOwn, IOnUpdate
     GameObject _model;
     Rigidbody2D _rb2d;
 
-    public void OnUpdate(float deltaTime)
+    public void OnUpdate(StateController state)
     {
         float directionX = _joystick.Direction.normalized.x;
         if (directionX != 0)
         {
             float dirX = (directionX < 0) ? -1 : 1;
-            _rb2d.AddForce(new Vector2(dirX * _moveStat.FinalValue * deltaTime, _rb2d.velocity.y));
+            _rb2d.AddForce(new Vector2(dirX * _moveStat.FinalValue * Time.deltaTime, _rb2d.velocity.y));
             
             //_rb2d.velocity = new Vector2(dirX * _moveStat.FinalValue * deltaTime, _rb2d.velocity.y);
 
@@ -50,5 +50,6 @@ public class RunHandle : IInfo, IOwn, IOnUpdate
         _joystick = JoystickController.GetJoystick(_info.JoystickID);
         _model = gameObject.GetComponentInChildren<Animator>().gameObject;
         _rb2d = gameObject.GetComponentInChildren<Rigidbody2D>();
+        (own as StateController).Events.RegisterEvent(StateController.StateEventType.OnUpdate, OnUpdate);
     }
 }

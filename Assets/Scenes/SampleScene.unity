@@ -4341,6 +4341,7 @@ MonoBehaviour:
     Level: 0
   statCtrl: {fileID: 2016413236}
   stateInfoName: {fileID: 2067474481}
+  prefab: {fileID: -3428730877878712753, guid: e0a7230cdfeacf841987f9323eab8b65, type: 3}
 --- !u!114 &2016413236
 MonoBehaviour:
   m_ObjectHideFlags: 0

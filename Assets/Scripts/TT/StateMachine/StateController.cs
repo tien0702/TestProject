@@ -8,21 +8,6 @@ namespace TT
         void SetOwn(object own);
     }
 
-    public interface IOnEnter
-    {
-        void OnEnter(StateController state);
-    }
-
-    public interface IOnUpdate
-    {
-        void OnUpdate(float deltaTime);
-    }
-
-    public interface IOnExit
-    {
-        void OnExit();
-    }
-
     public interface IOnCheck
     {
         void OnCheck();
@@ -59,7 +44,7 @@ namespace TT
         {
             get
             {
-                if(_stateHash == null)
+                if (_stateHash == null)
                 {
                     _stateHash = new StateInfoHash(this);
                 }
@@ -71,54 +56,46 @@ namespace TT
     public class StateController : ActionNode, IInfo
     {
         #region Events
-        public enum StateEventType { OnEnter, OnUpdate, OnExit, OnClear }
+        public enum StateEventType { OnEnter, OnUpdate, OnExit, OnCheck, OnClear }
         ObserverEvents<StateEventType, StateController> _events = new ObserverEvents<StateEventType, StateController>();
         public ObserverEvents<StateEventType, StateController> Events => _events;
         #endregion
 
         #region Interfaces
-        LinkedList<IOnEnter> _onEnters = new LinkedList<IOnEnter>();
-        LinkedList<IOnUpdate> _updates = new LinkedList<IOnUpdate>();
-        LinkedList<IOnExit> _onExits = new LinkedList<IOnExit>();
         LinkedList<IOnCheck> _onChecks = new LinkedList<IOnCheck>();
+        LinkedList<IOwn> _owns = new LinkedList<IOwn>();
         #endregion
 
         [SerializeField] protected StateInfo _info;
         public StateInfo Info => _info;
 
         StateMachine _stateMachine;
+        Animator _animator;
 
         protected virtual void Awake()
         {
             _stateMachine = GetComponent<StateMachine>();
+            _animator = GetComponentInChildren<Animator>();
+        }
+
+        protected virtual void Start()
+        {
+            foreach(IOwn own in _owns)
+            {
+                own.SetOwn(this);
+            }
         }
 
         protected override void OnAddComponent(object component)
         {
             base.OnAddComponent(component);
-            if (component is IOnEnter)
-            {
-                _onEnters.AddLast((IOnEnter)component);
-            }
-
-            if (component is IOnUpdate)
-            {
-                _updates.AddLast((IOnUpdate)component);
-            }
-
             if (component is IOnCheck)
             {
                 _onChecks.AddLast((IOnCheck)component);
             }
-
-            if (component is IOnExit)
-            {
-                _onExits.AddLast((IOnExit)component);
-            }
-
             if (component is IOwn)
             {
-                ((IOwn)component).SetOwn(this);
+                _owns.AddLast((IOwn)component);
             }
         }
 
@@ -132,9 +109,9 @@ namespace TT
 
         public virtual void OnEnter()
         {
-            foreach (IOnEnter onEnter in _onEnters)
+            if(_info.AnimName != null && !_info.AnimName.Equals(string.Empty))
             {
-                onEnter.OnEnter(this);
+                _animator.Play(_info.StateHash.Anim);
             }
 
             _events.Notify(StateEventType.OnEnter, this);
@@ -143,17 +120,8 @@ namespace TT
 
         public virtual int OnUpdate(float deltaTime)
         {
-            // Updates
-            foreach (IOnUpdate update in _updates)
-            {
-                update.OnUpdate(deltaTime);
-            }
-
             _events.Notify(StateEventType.OnUpdate, this);
-
             if (IsHandling()) return _info.StateHash.State;
-
-            // Check next states
             for (int i = 0; i < _info.NextStates.Length; i++)
             {
                 StateController nextState = _stateMachine.GetState(_info.StateHash.NextStates[i]);
@@ -168,19 +136,12 @@ namespace TT
 
         public virtual void OnExit()
         {
-            foreach (IOnExit onExit in _onExits)
-            {
-                onExit.OnExit();
-            }
             _events.Notify(StateEventType.OnExit, this);
         }
 
         protected override void Clear()
         {
             base.Clear();
-            _onEnters.Clear();
-            _updates.Clear();
-            _onExits.Clear();
             _onChecks.Clear();
 
             _events.Notify(StateEventType.OnClear, this);
@@ -193,6 +154,7 @@ namespace TT
             {
                 onCheck.OnCheck();
             }
+            _events.Notify(StateEventType.OnCheck, this);
             return base.IsSuitable();
         }
     }

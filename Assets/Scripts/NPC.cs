@@ -17,9 +17,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerEnter2D: " + collision.gameObject.layer.ToString());
         InteractableController.Instance.AddInteract(gameObject.name, () => {
-            Debug.Log("interact: " + gameObject.name);
             ConversationController.Instance.EnterConversation(JsonUtility.FromJson<ConversationNode>(json["data"].ToString()));
         });
 
@@ -27,7 +25,6 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("OnTriggerExit2D");
         InteractableController.Instance.RemoveInteract(gameObject.name);
     }
 }
