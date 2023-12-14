@@ -13,7 +13,8 @@
                     "Jump",
                     "Fall"
                 ],
-                "data": [{
+                "data": [
+                    {
                         "AssemblyName": "Assembly-CSharp",
                         "NodeType": "JoystickCondition",
                         "NodeTypeInfo": "JoystickConditionInfo",
@@ -115,8 +116,8 @@
                 "StateName": "Fall",
                 "AnimName": "Fall",
                 "NextStates": [
-                    "Idle",
-                    "Run"
+                    "Run",
+                    "Idle"
                 ],
                 "data": [
                     {

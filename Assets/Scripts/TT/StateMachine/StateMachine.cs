@@ -15,16 +15,13 @@ namespace TT
 
         Dictionary<int, StateController> _states = new Dictionary<int, StateController>();
 
-        [SerializeField] int _currentState = -1;
+        [SerializeField] int _currentState;
         public int CurrentState => _currentState;
         public StateController[] States => _states.Values.ToArray();
 
         protected virtual void Start()
         {
-            if (_currentState == -1)
-            {
-                _states[_currentState].OnEnter();
-            }
+            _states[_currentState].OnEnter();
         }
 
         protected virtual void Update()
@@ -49,7 +46,7 @@ namespace TT
 
             string[] datas = new string[jsonArray.Count];
 
-            for(int i = 0; i < jsonArray.Count; ++i)
+            for (int i = 0; i < jsonArray.Count; ++i)
             {
                 datas[i] = jsonArray[i]["data"].ToString();
             }
@@ -71,7 +68,7 @@ namespace TT
             if (component is StateController)
             {
                 StateController state = (StateController)component;
-                if (_currentState == -1)
+                if (_states.Count == 0)
                 {
                     _currentState = state.Info.StateHash.State;
                 }
@@ -86,9 +83,9 @@ namespace TT
             }
         }
 
-        public StateController GetState(int  stateHash)
+        public StateController GetState(int stateHash)
         {
-            if(!_states.ContainsKey(stateHash))
+            if (!_states.ContainsKey(stateHash))
             {
                 return null;
             }
@@ -97,9 +94,9 @@ namespace TT
 
         public StateController GetStateByName(string stateName)
         {
-            foreach(var state in _states)
+            foreach (var state in _states)
             {
-                if(state.Value.Info.StateName.Equals(stateName))
+                if (state.Value.Info.StateName.Equals(stateName))
                 {
                     return state.Value;
                 }
